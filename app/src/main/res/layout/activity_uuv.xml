@@ -1,22 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/tabhost" android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    <LinearLayout android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <FrameLayout android:id="@android:id/tabcontent"
-            android:layout_weight="1" android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+<!-- This could be your fragment container, or something -->
+<FrameLayout
+    android:id="@+id/contentContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@+id/bottomBar" />
 
-            <TabWidget android:id="@android:id/tabs"
-                android:layout_gravity="bottom"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"/>
+<com.roughike.bottombar.BottomBar
+    android:id="@+id/bottomBar"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_alignParentBottom="true"
+    app:bb_tabXmlResource="@xml/bottombar_tabs" />
 
-        </FrameLayout>
-    </LinearLayout>
-
-</TabHost>
+</RelativeLayout>
 
