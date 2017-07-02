@@ -1,33 +1,33 @@
 package com.jiadi.uw;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 /**
  * Created by 北 on 2017/6/24.
  */
 
-public class SubmarineActivity extends AppCompatActivity {
+public class SubmarineActivity extends Fragment {
     private ImageButton buttonCus1;
     private Context mContext;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_submarine);
-        mContext=this;
-        buttonCus1= (ImageButton)findViewById(R.id.ButtonCus1);
-        buttonCus1.setOnClickListener(buttonCus1ClickListener);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_submarine, container, false);
+        bindView(view);
+        return view;
     }
-    private View.OnClickListener buttonCus1ClickListener = new View.OnClickListener() {
-        public void onClick(View arg0) {
-            Intent setIntent = new Intent();
-            setIntent.setClass(mContext, Wifisetting.class);
-            startActivity(setIntent);
-        }
-    };
+
+    private void bindView(View view) {
+    }
 }
