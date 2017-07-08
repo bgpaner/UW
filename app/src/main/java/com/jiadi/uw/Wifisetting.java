@@ -9,6 +9,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -17,11 +18,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.util.ArrayList;
-
 
 
 public class Wifisetting extends Fragment {
@@ -71,20 +72,44 @@ public class Wifisetting extends Fragment {
     private final int HEART_BREAK_CHECK_INTERVAL = 8000;//ms
     private final int QUIT_BUTTON_PRESS_INTERVAL = 2500;//ms
     private final int HEART_BREAK_SEND_INTERVAL = 2500;//ms
+
+    private TextView Text_ip;
+    private TextView Text_port;
+    private Button Button_connect;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_wifisetting, container, false);
         bindView(view);
-        connectToRouter(m4test);
         return view;
     }
 
     private void bindView(View view) {
+        Text_ip = tools.find(view, R.id.editText1_ip);
+        Text_port = tools.find(view, R.id.editText2_port);
+        Button_connect = tools.find(view, R.id.button_connect);
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ROUTER_CONTROL_URL = String.valueOf(Text_ip);
+        //ROUTER_CONTROL_PORT = Integer.valueOf(String.valueOf(Text_port));
+        Button_connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!m4test) {
+                    connectToRouter(m4test);
+                }
+            }
+        });
+
+    }
+
     private void sendCommand(byte[] data) {
-        if ( mWifiStatus != STATUS_CONNECTED || null == mtcpSocket) {
-            mLogText.setText("状态异常, 无法发送命令 ...." +  data.toString());
+        if (mWifiStatus != STATUS_CONNECTED || null == mtcpSocket) {
+            mLogText.setText("状态异常, 无法发送命令 ...." + data.toString());
             return;
         }
 
@@ -113,7 +138,7 @@ public class Wifisetting extends Fragment {
         byte cmd2 = command[2];
         //byte cmd3 = command[3];
 
-        if (command[0] != COMMAND_PERFIX || command[Constant.COMMAND_LENGTH-1] != COMMAND_PERFIX) {
+        if (command[0] != COMMAND_PERFIX || command[Constant.COMMAND_LENGTH - 1] != COMMAND_PERFIX) {
             return;
         }
 
@@ -123,11 +148,11 @@ public class Wifisetting extends Fragment {
         }
 
         switch (cmd2) {
-            case (byte)0x01:
+            case (byte) 0x01:
                 mLogText.setText("收到小车心跳包 ！");
                 handleHeartBreak();
                 break;
-            case (byte)0x02:
+            case (byte) 0x02:
                 handleHeartBreak();
                 break;
             default:
@@ -136,9 +161,9 @@ public class Wifisetting extends Fragment {
         }
     }
 
-    private int getWifiStatus () {
+    private int getWifiStatus() {
         int status = WIFI_STATE_UNKNOW;
-        WifiManager mWifiMng = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+        WifiManager mWifiMng = (WifiManager) mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         switch (mWifiMng.getWifiState()) {
             case WifiManager.WIFI_STATE_DISABLED:
             case WifiManager.WIFI_STATE_DISABLING:
@@ -148,7 +173,7 @@ public class Wifisetting extends Fragment {
                 break;
             case WifiManager.WIFI_STATE_ENABLED:
                 status = WIFI_STATE_NOT_CONNECTED;
-                ConnectivityManager conMan = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+                ConnectivityManager conMan = (ConnectivityManager) mContext.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo.State wifiState = conMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
                 if (NetworkInfo.State.CONNECTED == wifiState) {
                     WifiInfo info = mWifiMng.getConnectionInfo();
@@ -214,10 +239,8 @@ public class Wifisetting extends Fragment {
         mHandler.sendMessage(msg);
     }
 
-    private Runnable mRunnable = new Runnable()
-    {
-        public void run()
-        {
+    private Runnable mRunnable = new Runnable() {
+        public void run() {
             BufferedInputStream is = null;
             try {
                 //连接服务器
@@ -231,13 +254,11 @@ public class Wifisetting extends Fragment {
             }
 
             long lastTicket = System.currentTimeMillis();
-            byte[] command = {0,0,0,0,0};
+            byte[] command = {0, 0, 0, 0, 0};
             int commandLength = 0;
             int i = 0;
-            while (mThreadFlag)
-            {
-                try
-                {
+            while (mThreadFlag) {
+                try {
                     byte[] buffer = new byte[is.available()];
                     if (is.read(buffer) > 0) {
                         //printRecBuffer ("receive buffer", buffer, buffer.length);
@@ -251,17 +272,15 @@ public class Wifisetting extends Fragment {
         }
     };
 
-    Handler mHandler = new Handler()
-    {
-        public void handleMessage(Message msg)
-        {
+    Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
             Log.i("Main", "handle internal Message, id=" + msg.what);
 
             switch (msg.what) {
                 case MSG_ID_ERR_RECEIVE:
                     break;
                 case MSG_ID_CON_READ:
-                    byte[] command = (byte[])msg.obj;
+                    byte[] command = (byte[]) msg.obj;
                     //mLogText.setText("handle response from router: " + command.toString() );
                     handleCallback(command);
                     break;
@@ -313,7 +332,7 @@ public class Wifisetting extends Fragment {
                     mHeartBreakCounter = 0;
                     Message msgHB = new Message();
                     msgHB.what = MSG_ID_HEART_BREAK_RECEIVE;//启动心跳包检测循环
-                    mHandler.sendMessageDelayed (msgHB, HEART_BREAK_CHECK_INTERVAL);
+                    mHandler.sendMessageDelayed(msgHB, HEART_BREAK_CHECK_INTERVAL);
                     break;
                 case MSG_ID_HEART_BREAK_SEND:
                     Message msgSB = new Message();
@@ -321,9 +340,9 @@ public class Wifisetting extends Fragment {
                     Log.i("main", "handle MSG_ID_HEART_BREAK_SEND");
 
                     //sendCommand(COMM_HEART_BREAK);
-                    mHandler.sendMessageDelayed (msgSB, HEART_BREAK_SEND_INTERVAL);
+                    mHandler.sendMessageDelayed(msgSB, HEART_BREAK_SEND_INTERVAL);
                     break;
-                default :
+                default:
                     break;
             }
             super.handleMessage(msg);
