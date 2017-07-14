@@ -22,7 +22,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.BufferedInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
+import static com.jiadi.uw.tools.*;
 
 
 public class Wifisetting extends Fragment {
@@ -40,11 +44,12 @@ public class Wifisetting extends Fragment {
     private final int MSG_ID_HEART_BREAK_SEND = 1012;
     private final int MSG_ID_LOOP_END = 1013;
 
-    private String ROUTER_CONTROL_URL = "192.168.2.1";
-    private String ROUTER_CONTROL_URL_TEST = "192.168.1.1";
-    private int ROUTER_CONTROL_PORT = 2001;
-    private int ROUTER_CONTROL_PORT_TEST = 2001;
-    private final String WIFI_SSID_PERFIX = "UW";
+    private String ROUTER_CONTROL_URL = "www.baidu.com";
+    private String ROUTER_CONTROL_URL_TEST = "www.baidu.com";
+    private int ROUTER_CONTROL_PORT = 80;
+    private int ROUTER_CONTROL_PORT_TEST = 80;
+    private final String WIFI_SSID_PERFIX = "21507";
+    private byte[] TEST = {(byte)0xEB, (byte)0x90, (byte)0x46, (byte)0x00, (byte) 0x00};
 
     private final int WIFI_STATE_UNKNOW = 0x3000;
     private final int WIFI_STATE_DISABLED = 0x3001;
@@ -52,10 +57,13 @@ public class Wifisetting extends Fragment {
     private final int WIFI_STATE_CONNECTED = 0x3003;
 
     private final int STATUS_INIT = 0x2001;
-    private Context mContext;
+    private Context WContext;
     private TextView mLogText;
     SocketClient mtcpSocket;
     private Thread mThreadClient = null;
+    private String loc;
+    private StringBuffer sb;
+    String content;
 
     private boolean m4test = false;
     private boolean mThreadFlag = false;
@@ -89,13 +97,14 @@ public class Wifisetting extends Fragment {
         Text_ip = tools.find(view, R.id.editText1_ip);
         Text_port = tools.find(view, R.id.editText2_port);
         Button_connect = tools.find(view, R.id.button_connect);
+        mLogText=tools.find(view,R.id.textView);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ROUTER_CONTROL_URL = String.valueOf(Text_ip);
-        //ROUTER_CONTROL_PORT = Integer.valueOf(String.valueOf(Text_port));
+        WContext=getActivity();
         Button_connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,9 +129,10 @@ public class Wifisetting extends Fragment {
 
         try {
             mtcpSocket.sendMsg(data);
-            //Toast.makeText(mContext, "发送成功", 1);
+            dialog(WContext, null, null, "success", null, -1);
         } catch (Exception e) {
             Log.i("Socket", e.getMessage() != null ? e.getMessage().toString() : "sendCommand error!");
+            dialog(WContext, null, null, "sendCommand try失败：" + e.getMessage().toString(), null, -1);
             //Toast.makeText(mContext, "发送消息给路由器失败  ：" + e.getMessage(),
             //        Toast.LENGTH_SHORT).show();
         }
@@ -163,7 +173,7 @@ public class Wifisetting extends Fragment {
 
     private int getWifiStatus() {
         int status = WIFI_STATE_UNKNOW;
-        WifiManager mWifiMng = (WifiManager) mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiManager mWifiMng = (WifiManager)WContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         switch (mWifiMng.getWifiState()) {
             case WifiManager.WIFI_STATE_DISABLED:
             case WifiManager.WIFI_STATE_DISABLING:
@@ -173,7 +183,7 @@ public class Wifisetting extends Fragment {
                 break;
             case WifiManager.WIFI_STATE_ENABLED:
                 status = WIFI_STATE_NOT_CONNECTED;
-                ConnectivityManager conMan = (ConnectivityManager) mContext.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                ConnectivityManager conMan = (ConnectivityManager) WContext.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo.State wifiState = conMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
                 if (NetworkInfo.State.CONNECTED == wifiState) {
                     WifiInfo info = mWifiMng.getConnectionInfo();
@@ -226,6 +236,7 @@ public class Wifisetting extends Fragment {
                     + " port=" + clientPort);
             mWifiStatus = STATUS_CONNECTED;
         } catch (Exception e) {
+            mLogText.setText("初始化失败");
             Log.d("Socket", "initWifiConnection return exception! ");
         }
 
@@ -235,8 +246,9 @@ public class Wifisetting extends Fragment {
         } else {
             msg.what = MSG_ID_CON_SUCCESS;
         }
-
+        mLogText.setText("正在初始化.....稍等");
         mHandler.sendMessage(msg);
+        mLogText.setText("初始化成功");
     }
 
     private Runnable mRunnable = new Runnable() {
@@ -245,8 +257,11 @@ public class Wifisetting extends Fragment {
             try {
                 //连接服务器
                 initWifiConnection();
+                mLogText.setText("连接服务器成功");
                 is = new BufferedInputStream(mtcpSocket.getInputStream());
+
             } catch (Exception e) {
+                dialog(WContext, null, null, "连接服务器失败：" + e.getMessage().toString(), null, -1);
                 Message msg = new Message();
                 msg.what = MSG_ID_ERR_INIT_READ;
                 mHandler.sendMessage(msg);
@@ -259,6 +274,7 @@ public class Wifisetting extends Fragment {
             int i = 0;
             while (mThreadFlag) {
                 try {
+                    //sendCommand(TEST);
                     byte[] buffer = new byte[is.available()];
                     if (is.read(buffer) > 0) {
                         //printRecBuffer ("receive buffer", buffer, buffer.length);
@@ -354,4 +370,25 @@ public class Wifisetting extends Fragment {
         mHeartBreakCounter++;
         bHeartBreakFlag = true;
     }
+    Handler handler = new Handler();
+    Runnable updateMessage = new Runnable() {
+
+        public void run() {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String time=format.format(new Date());
+            loc = time + "\n";
+            loc = loc + sb;
+            mLogText.setText(loc);
+            handler.postDelayed(updateMessage, 1000);
+        }
+    };
+
+    Handler saveHandler = new Handler();
+    final Runnable saveThread = new Runnable() {
+
+        public void run() {
+            content = content + loc + "\r\n";
+            saveHandler.postDelayed(saveThread,1000);
+        }
+    };
 }

@@ -9,14 +9,24 @@ import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 public class VesselActivity extends Fragment {
-    private ImageButton buttonCus1;
-    private Context mContext;
+    private ImageButton bt_Back;
+    private ImageButton bt_Stop;
+    private ImageButton bt_RightUp;
+    private ImageButton bt_Right;
+    private ImageButton bt_RightDown;
+    private ImageButton bt_LeftUp;
+    private ImageButton bt_Left;
+    private ImageButton bt_LeftDown;
+    private ImageButton bt_Indicator;
+    private ImageButton bt_TakePic;
+    private Context VContext;
 
     @Nullable
     @Override
@@ -26,14 +36,141 @@ public class VesselActivity extends Fragment {
         return view;
     }
 
-    private void bindView(View view) {//buttonCus1= (ImageButton) buttonCus1.findViewById(R.id.ButtonCus1);
-    }
+    private void bindView(View view) {
+        bt_Back=tools.find(view,R.id.btnBack);
+        //bt_Indicator=tools.find(view,R.id.btnIndicator);
+        bt_Left=tools.find(view,R.id.btnLeft1);
+        bt_LeftDown=tools.find(view,R.id.btnLeftDown);
+        bt_LeftUp=tools.find(view,R.id.btnLeftUp);
+        bt_Right=tools.find(view,R.id.btnRight1);
+        bt_RightDown=tools.find(view,R.id.btnRightDown);
+        bt_RightUp=tools.find(view,R.id.btnRightUp);
+        bt_Stop=tools.find(view,R.id.btnStop);
+        bt_TakePic=tools.find(view,R.id.ButtonTakePic);
 
-    /*private OnClickListener buttonCus1ClickListener = new OnClickListener() {
-        public void onClick(View arg0) {
-            Intent setIntent = new Intent();
-            setIntent.setClass(mContext, Wifisetting.class);
-            startActivity(setIntent);
-        }
-    };*/
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        VContext = getActivity();
+        bt_Back.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        //sendCommand(COMM_VIDEOLEFT);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        bt_Left.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        //sendCommand(COMM_VIDEOLEFT);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        bt_LeftDown.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        //sendCommand(COMM_VIDEOLEFT);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        bt_LeftDown.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        //sendCommand(COMM_VIDEOLEFT);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        bt_LeftUp.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        //sendCommand(COMM_VIDEOLEFT);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        bt_Right.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        //sendCommand(COMM_VIDEOLEFT);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        bt_RightDown.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        //sendCommand(COMM_VIDEOLEFT);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        bt_RightUp.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        //sendCommand(COMM_VIDEOLEFT);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        bt_Stop.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        //sendCommand(COMM_VIDEOLEFT);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        bt_TakePic.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        //sendCommand(COMM_VIDEOLEFT);
+                        break;
+                }
+                return false;
+            }
+        });
+    }
 }
