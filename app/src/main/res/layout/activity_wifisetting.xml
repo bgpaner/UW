@@ -10,9 +10,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.jiadi.uw.Wifisetting">
 
+    <ListView
+        android:id="@+id/wifi_list"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editText6" />
 
     <EditText
-        android:id="@+id/editText1_ip"
+        android:id="@+id/editText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -20,42 +28,57 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="IP"
+        android:text="Name"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <EditText
-        android:id="@+id/editText2_port"
+        android:id="@+id/editText4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/editText1_ip"
+        android:layout_below="@+id/editText3"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="PORT"
+        android:text="Name"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <Button
-        android:id="@+id/button_connect"
+    <EditText
+        android:id="@+id/editText5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/editText2_port"
-        android:text="Connect"
+        android:layout_below="@+id/editText4"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
-    <TextView
-        android:id="@+id/textView"
+
+    <EditText
+        android:id="@+id/editText6"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/button_connect"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:layout_below="@+id/editText5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="19dp"
+        android:layout_toLeftOf="@+id/toggleButton2"
+        android:layout_toStartOf="@+id/toggleButton2" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/wifi_list"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:text="ToggleButton"
+        android:layout_below="@+id/editText5" />
 
 </RelativeLayout>
