@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.jiadi.uw"
         minSdkVersion 14
@@ -28,4 +29,5 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.roughike:bottom-bar:2.3.1'
     testCompile 'junit:junit:4.12'
+    compile 'cn.bmob.android:bmob-sdk:3.5.0'
 }
