@@ -9,14 +9,26 @@ import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class VesselActivity extends Fragment {
-    private ImageButton buttonCus1;
-    private Context mContext;
+    private ImageButton bt_Back;
+    private ImageButton bt_Stop;
+    private ImageButton bt_RightUp;
+    private ImageButton bt_Right;
+    private ImageButton bt_RightDown;
+    private ImageButton bt_LeftUp;
+    private ImageButton bt_Left;
+    private ImageButton bt_LeftDown;
+    private ImageButton bt_Indicator;
+    private ImageButton bt_update;
+    private Context VContext;
+    private TextView Date;
 
     @Nullable
     @Override
@@ -26,14 +38,11 @@ public class VesselActivity extends Fragment {
         return view;
     }
 
-    private void bindView(View view) {//buttonCus1= (ImageButton) buttonCus1.findViewById(R.id.ButtonCus1);
-    }
+    private void bindView(View view) {
 
-    /*private OnClickListener buttonCus1ClickListener = new OnClickListener() {
-        public void onClick(View arg0) {
-            Intent setIntent = new Intent();
-            setIntent.setClass(mContext, Wifisetting.class);
-            startActivity(setIntent);
-        }
-    };*/
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
 }

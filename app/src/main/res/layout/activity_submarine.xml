@@ -16,7 +16,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
     <ImageButton android:id="@+id/btnRightDown"
@@ -35,9 +37,8 @@
         android:layout_height="40dp"
         android:layout_gravity="left"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/btnIndicator"
-        android:layout_toEndOf="@+id/btnIndicator"
-        android:layout_marginBottom="38dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ImageButton android:id="@+id/btnBack"
         android:src="@drawable/down"
@@ -53,7 +54,7 @@
         android:background="#00000000"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_above="@+id/btnRightDown"
+        android:layout_above="@+id/btnLeftDown"
         android:layout_toRightOf="@+id/btnLeftDown"
         android:layout_toEndOf="@+id/btnLeftDown" />
 
@@ -90,9 +91,9 @@
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_gravity="left"
-        android:layout_below="@+id/btnForward"
-        android:layout_toLeftOf="@+id/btnStop"
-        android:layout_toStartOf="@+id/btnStop" />
+        android:layout_above="@+id/btnLeftDown"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ImageButton android:id="@+id/btnLeftUp"
         android:src="@drawable/leftup"
@@ -100,27 +101,29 @@
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_gravity="left"
-        android:layout_alignTop="@+id/btnForward"
-        android:layout_toLeftOf="@+id/btnForward"
-        android:layout_toStartOf="@+id/btnForward" />
+        android:layout_above="@+id/btnLeft1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <ImageButton android:id="@+id/btnFloat"
         android:src="@drawable/floatup"
         android:layout_width="50dp"
         android:layout_height="80dp"
-        android:layout_alignBottom="@+id/btnRightDown"
-        android:layout_toRightOf="@+id/btnRightDown"
-        android:layout_toEndOf="@+id/btnRightDown" />
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btnDive"
+        android:layout_toStartOf="@+id/btnDive"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_alignTop="@+id/btnRightUp" />
 
     <ImageButton android:id="@+id/btnDive"
         android:src="@drawable/dive"
         android:layout_width="50dp"
         android:layout_height="80dp"
-        android:layout_alignTop="@+id/btnFloat"
-        android:layout_toRightOf="@+id/btnFloat"
-        android:layout_toEndOf="@+id/btnFloat"
-        android:layout_marginLeft="11dp"
-        android:layout_marginStart="11dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/checkBox1"
+        android:layout_alignEnd="@+id/checkBox1"
+        android:layout_alignTop="@+id/btnFloat" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -129,24 +132,47 @@
         android:id="@+id/checkBox1"
         android:checked="false"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/btnRightUp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp" />
 
     <ImageButton android:id="@+id/ButtonTakePic"
         android:src="@drawable/take_pic"
         android:background="#00000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnIndicator"
-        android:layout_alignRight="@+id/ButtonCus1"
-        android:layout_alignEnd="@+id/ButtonCus1" />
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/btnForward"
+        android:layout_toEndOf="@+id/btnForward" />
 
     <ImageView android:id="@+id/btnIndicator"
         android:src="@drawable/sym_indicator"
         android:background="#00000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnLeftUp"
-        android:layout_alignRight="@+id/ButtonTakePic"
-        android:layout_alignEnd="@+id/ButtonTakePic" />
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/btnFloat"
+        android:layout_alignBottom="@+id/ButtonTakePic" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="机器状态：设备连接出错或未连接！\n设备电量：状态异常！\n"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ButtonCus1" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="500dp"
+        android:layout_height="270dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView"
+        android:background="@color/title_text_color" />
 
 </RelativeLayout>
