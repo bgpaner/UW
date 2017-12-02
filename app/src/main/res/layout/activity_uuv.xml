@@ -13,7 +13,11 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
 <com.roughike.bottombar.BottomBar
     android:id="@+id/bottomBar"
     android:layout_width="match_parent"
+<<<<<<< HEAD
     android:layout_height="55dp"
+=======
+    android:layout_height="60dp"
+>>>>>>> refs/remotes/yuanmingwang/master
     android:layout_alignParentBottom="true"
     app:bb_tabXmlResource="@xml/bottombar_tabs" />
 

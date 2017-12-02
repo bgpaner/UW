@@ -829,6 +829,7 @@ public class tools {
             }
         }
     }
+<<<<<<< HEAD
     /**
      * 将字节数组转换为16进制字符串
      *
@@ -846,4 +847,6 @@ public class tools {
         }
         return result;
     }
+=======
+>>>>>>> refs/remotes/yuanmingwang/master
 }

@@ -67,7 +67,11 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         register= (Button) findViewById(R.id.register);
         forget_password= (TextView) findViewById(R.id.forget_password);
         login_checkbox= (CheckBox) findViewById(R.id.login_checkBox);
+<<<<<<< HEAD
         //title_text= (TextView) findViewById(R.id.title_text);
+=======
+        title_text= (TextView) findViewById(R.id.title_text);
+>>>>>>> refs/remotes/yuanmingwang/master
         repassword= (Button) findViewById(R.id.reset_password);
         getCode= (RelativeLayout) findViewById(R.id.getCode);
         login_code= (EditText) findViewById(R.id.login_code);
@@ -258,7 +262,11 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 
         @Override
         public void onLoginSuccess() {
+<<<<<<< HEAD
             Intent intent=new Intent(LoginActivity.this,UWActivity.class);
+=======
+            Intent intent=new Intent(LoginActivity.this,RegisterActivity.class);
+>>>>>>> refs/remotes/yuanmingwang/master
             startActivity(intent);
             finish();
             Toast.makeText(LoginActivity.this, R.string.login_success,Toast.LENGTH_LONG).show();
