@@ -1,70 +1,41 @@
 package com.jiadi.uw;
-/**
- * Created by 北 on 2017/6/24.
- */
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class SocketClient {
-    static Socket client = null;
+    private Socket client = null;
 
-    public SocketClient(String site, int port) {
-        try {
-            client = new Socket(site, port);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public SocketClient(String site, int port) throws IOException {
+        client = new Socket(site, port);
     }
 
-    public void sendMsg(byte[] msg) {
-        try {
-            OutputStream out = client.getOutputStream();
-            out.write(msg);
-            out.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void sendMsg(byte[] msg) throws IOException {
+        OutputStream out = client.getOutputStream();
+        out.write(msg);
+        out.flush();
     }
 
-
-    public void closeSocket() {
-        try {
-            client.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void closeSocket() throws IOException {
+        client.close();
     }
 
-    public InputStream getInputStream() {
+    public InputStream getInputStream() throws IOException {
         if (client != null) {
-            try {
-                return client.getInputStream();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            return client.getInputStream();
+        } else {
+            throw new IllegalArgumentException("client is null.");
         }
-        return null;
     }
 
-    public OutputStream getOutputStream() {
+    public OutputStream getOutputStream() throws IOException {
         if (client != null) {
-            try {
-                return client.getOutputStream();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            return client.getOutputStream();
+        } else {
+            throw new IllegalArgumentException("client is null.");
         }
-        return null;
-    }
-
-    public static void main(String[] args) throws Exception {
-
     }
 }
 

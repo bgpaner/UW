@@ -32,6 +32,10 @@ import android.widget.Toast;
 import java.io.File;
 import java.security.InvalidParameterException;
 import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -680,7 +684,8 @@ public class tools {
      */
     public static boolean isWifiConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm != null && cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI;
+        //return cm != null && cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI;
+        return true;
     }
 
     /**
@@ -829,7 +834,17 @@ public class tools {
             }
         }
     }
-<<<<<<< HEAD
+
+    /**
+     * 获取当前系统时间字符串
+     *
+     * @return 返回时间字符串(不含日期)
+     */
+    public static String getTime() {
+        DateFormat df = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
+        return df.format(new Date());
+    }
+
     /**
      * 将字节数组转换为16进制字符串
      *
@@ -847,6 +862,13 @@ public class tools {
         }
         return result;
     }
-=======
->>>>>>> refs/remotes/yuanmingwang/master
+    public static String binaryToHexString(byte bytes) {
+        String hexStr = "0123456789ABCDEF";
+        String result = "";
+        String hex;
+        hex = String.valueOf(hexStr.charAt((bytes & 0xF0) >> 4));
+        hex += String.valueOf(hexStr.charAt(bytes & 0x0F));
+        result += hex + " ";
+        return result;
+    }
 }
